@@ -1,0 +1,45 @@
+1)
+
+
+CREATE PROCEDURE GetVerbaliAnno
+
+    @Anno int
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT *
+  FROM [dbo].[Verbale] as v
+  join dbo.Anagrafica as a on a.IDAnagrafica = v.IDAnagrafica 
+  where year(v.DataViolazione) like @Anno
+END
+GO
+
+2)
+
+CREATE PROCEDURE GetSommaPuntiData
+	@Date date
+AS
+BEGIN
+	SET NOCOUNT ON;
+    SELECT DataViolazione, sum(DecurtamentoPunti) as PuntiTotali
+	 FROM Verbale
+	 group by DataViolazione
+	 having DataViolazione = @Date
+END
+GO
+
+
+3)
+
+CREATE PROCEDURE DeleteVerbale 
+	@IDVerbale int
+AS
+BEGIN
+	SET NOCOUNT ON;
+	DELETE FROM Verbale
+	WHERE IDVerbale = @IDVerbale
+END
+GO
+
+
+
